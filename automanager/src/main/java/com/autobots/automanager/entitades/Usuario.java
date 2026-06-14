@@ -1,0 +1,68 @@
+package com.autobots.automanager.entitades;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.autobots.automanager.enumeracoes.PerfilUsuario;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+@Data
+@EqualsAndHashCode(exclude = { "mercadorias", "vendas", "veiculos" })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Entity
+public class Usuario {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	@Column(nullable = false)
+	private String nome;
+	@Column
+	private String nomeSocial;
+	@ElementCollection(fetch = FetchType.LAZY)
+	private Set<PerfilUsuario> perfis = new HashSet<>();
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Telefone> telefones = new HashSet<>();
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	private Endereco endereco;
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Documento> documentos = new HashSet<>();
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Email> emails = new HashSet<>();
+	@JsonIgnore
+	@OneToMany(orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Set<Credencial> credenciais = new HashSet<>();
+	@OneToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.LAZY)
+	private Set<Mercadoria> mercadorias = new HashSet<>();
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, cascade = { 
+		CascadeType.PERSIST,
+		CascadeType.MERGE,
+		CascadeType.REFRESH
+	})
+	private Set<Venda> vendas = new HashSet<>();
+
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, cascade = {
+		CascadeType.PERSIST,
+		CascadeType.MERGE,
+		CascadeType.REFRESH
+	})
+	private Set<Veiculo> veiculos = new HashSet<>();
+
+}
