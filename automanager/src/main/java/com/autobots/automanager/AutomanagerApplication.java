@@ -266,3 +266,5 @@ public class AutomanagerApplication implements CommandLineRunner {
 
 	}
 }
+
+//૮₍ ´˶• ᴥ •˶` ₎ა shoyu~
