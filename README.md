@@ -52,7 +52,7 @@ A aplicação criará o banco automaticamente se não existir.
 # Conexão MySQL (banco será criado automaticamente se não existir)
 spring.datasource.url=jdbc:mysql://localhost:3306/base?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
 spring.datasource.username=root
-spring.datasource.password=MATPET2007a@
+spring.datasource.password=<senha>
 
 # Hibernat será auto-criar as tabelas
 spring.jpa.hibernate.ddl-auto=create
@@ -322,7 +322,7 @@ Verifique as credenciais em `application.properties`:
 
 ```properties
 spring.datasource.username=root
-spring.datasource.password=MATPET2007a@
+spring.datasource.password=<senha>
 ```
 
 Se a senha é diferente, altere conforme sua configuração local.
